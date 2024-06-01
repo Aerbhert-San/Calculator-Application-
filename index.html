@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta http-equiv="CONTENT-TYPE" content="text/html; charset=UTF-8">
+  <title>Calculator</title>
+  <style>
+
+  .bgr{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-size: cover;
+    margin: 0;
+    font-family: arial sans-serif;
+    background: url("bg.jpg") center fixed;
+    
+  
+  }
+
+  /*result*/
+    #result {
+      padding: 10px;
+      font-size: 20px;
+      width: 260px; 
+      height: 50px;
+      text-align: right;
+      margin-bottom: 10px;
+      border:none;
+      box-shadow: 0 5px 9px black;
+      border-radius: 6px;
+      grid-column: span 4; 
+      grid-row: 1;
+      font-size: 30px;
+      margin-bottom: 10px;
+   
+      
+
+    }
+    /*mga number*/
+    .num_btn {
+      font-size: 30px;
+      width: 60px;
+      height: 60px;
+      margin: 5px;
+      box-shadow: 0 3px 6px rgba(0,0,0,.2);
+      cursor:pointer;
+      color: black;
+      background-color: white;
+      border: none;
+    }
+   
+  /*clear*/
+  .clear{font-size:50px;width:30px;
+      background-color: white;
+      border: none;}
+/*container ulit hahahah*/
+.con2{
+  background: rgba(255,255,255,.2);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 3px 6px black;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.3);
+  -webkit-backdrop-filter: blur(11px);
+  
+
+}
+  /*basta lahat dito nakalagay*/
+    .container {
+      margin-top: 1vh;
+      display: grid;
+      grid-template-columns: repeat(4, 60px);
+      grid-template-rows: repeat(6, 60px);
+      grid-gap: 10px;
+      justify-content: center;
+      text-align: center;
+    }
+    /*equal sign*/
+    .equal_btn {
+      grid-column: 4; 
+      grid-row: span 3;
+      height: 200px;
+      font-size: 30px;
+      width: 60px;
+      margin: 5px;
+      cursor: pointer;
+      background-color: white;
+      border: none;
+    }
+  </style>
+  </style>
+</head>
+<body class="bgr">
+  
+  <!-------- name -------->
+
+<div class="con2">
+<div class="container">
+      
+<!-------- input -------->
+<input type="text" id="result">
+<!-------- clear -------->
+    <input type="button" value="C" class="num_btn" onclick="clearInput()">
+    <!--    erase   -->
+    <input type="button" value="E" class="num_btn" onclick="eraseNum()">
+  <!------- plus -------->
+    <input type="button" value="+" class="num_btn" onclick="add()">
+  <!-------- divide -------->
+    <input type="button" value="/" class="num_btn" onclick="divideInput()">
+    
+<!-------- number 1 -------->
+      <input type="button" value="1" class="num_btn" onclick="appendNum(1)">
+<!-------- number 2 -------->
+      <input type="button" value="2" class="num_btn" onclick="appendNum(2)">
+<!-------- number 3 -------->
+      <input type="button" value="3" class="num_btn" onclick="appendNum(3)">
+<!-------- times -------->
+      <input type="button" value="*" class="num_btn" onclick="multiInput()">
+  
+    
+<!-------- number 4 -------->
+      <input type="button" value="4" class="num_btn" onclick="appendNum(4)">
+<!-------- number 5 -------->
+      <input type="button" value="5" class="num_btn" onclick="appendNum(5)">
+<!-------- number 6 -------->
+      <input type="button" value="6" class="num_btn" onclick="appendNum(6)">
+   <!-------- equal -------->
+      <input type="button" value="=" class=" equal_btn" onclick="calculate()">
+   
+ 
+<!-------- number 7 -------->
+      <input type="button" value="7" class="num_btn" onclick="appendNum(7)">
+<!-------- number 8 -------->
+      <input type="button" value="8" class="num_btn" onclick="appendNum(8)">
+<!-------- number 9 -------->
+      <input type="button" value="9" class="num_btn" onclick="appendNum(9)">
+    
+<!-------- point -------->
+      <input type="button" value="." class="num_btn" onclick="appendNum('.')">
+<!-------- zero -------->
+      <input type="button" value="0" class="num_btn" onclick="appendNum(0)">
+<!-------- minus -------->
+      <input type="button" value="-" class="num_btn" onclick="minusInput()">
+    
+</div>
+</div>
+       
+    <script>
+    let currentInput="";
+    let currentOperator="";
+    let pointagain=false; //para sa point at di umulit
+    
+    
+
+    function appendNum(number){ //number input
+  if(currentInput=="0" &&  number ==="." ){
+    currentInput = "0."; 
+    pointagain = true;}
+  else if (  currentInput==="0" && number!=="0" && number!=="."){ //para kapag tinype zero tapos number 
+    currentInput+=number;
+  }
+  else if(number==="0" && currentInput[currentInput.lenght-1]==="0"  && currentInput[currentInput.lenght-2]==="0"){
+    return;
+  }
+  else {
+    if(number === "." && pointagain){
+    return;
+  } 
+  else{
+      if (number==="."){
+        pointagain=true;
+      }
+        currentInput += number;
+      }
+    }
+  
+  document.getElementById("result").value=currentInput;
+}
+
+
+    function op(operator){
+    if (currentInput==="" || /[+\-*/]/.test(currentInput)){
+    return;}
+      currentOperator=operator;
+      currentInput+=currentOperator;
+      document.getElementById("result").value=currentInput;
+      pointagain=false;
+    }
+    
+    function add(){
+      op("+");
+    }
+    
+    function minusInput(){
+      op("-");
+    }
+    
+    function multiInput(){
+      op("*");
+    }
+    
+    function divideInput(){
+     op("/");
+    }
+    
+    function calculate(){
+    if (currentInput.trim() === "") {
+        document.getElementById("result").value= "Enter Number";
+    }else{
+      const result=eval(currentInput);
+      document.getElementById("result").value=result;
+      currentOperator='';
+      currentInput=result.toString();
+      }}
+    
+    
+    function clearInput(){ //pang erase sa lahat
+      currentOperator="";
+      currentInput="";
+      document.getElementById("result").value="";
+      pointagain=false;
+    }
+    
+    
+    function eraseNum() { //pang erase isa isa
+  currentInput=currentInput.slice(0,-1);
+      document.getElementById('result').value=currentInput;
+      pointagain=false;
+  }
+  
+  
+  
+
+
+    </script>
+</body>
+</html>
